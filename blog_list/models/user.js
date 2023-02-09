@@ -9,16 +9,16 @@ const userSchema = mongoose.Schema({
         minlength: [3, 'Username must be at least three characters long']
     },
     name: String,
-    passwordHash: {
-        type: String,
-    },
-    notes: [
+    passwordHash: String,
+    blogs: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Blog'
         }
     ],
 })
+
+userSchema.plugin(uniqueValidator)
 
 userSchema.set('toJSON', {
     transform: (document, returnedObject) => {
@@ -30,5 +30,5 @@ userSchema.set('toJSON', {
     }
   })
 
-userSchema.plugin(uniqueValidator)
-module.exports = mongoose.model('User', userSchema)
+const User = mongoose.model('User', userSchema)
+module.exports = User
