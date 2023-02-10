@@ -1,10 +1,11 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InR1bnRlbWF0b24iLCJpZCI6IjYzZTYyODZmYzNkM2FjY2Y3YTM3MzkxYSIsImlhdCI6MTY3NjA1MzYzNX0.yOGIsSZ-OUa82WVjq44ROEBax8cy-yCF30uUAT6RInc
 
 {
-    "title": "Joku blogi",
-    "author": "A.Ankka",
-    "url": "https://www.joku.com",
-    "likes": 9,
-    "userId": "63e4edf6ff1b5af94751dc9c"
+    "title" : "poista",
+    "author": "poista",
+    "url": "https://www.poista.com",
+    "likes": 8,
+    "userId": "63e6286fc3d3accf7a37391a"
 }
