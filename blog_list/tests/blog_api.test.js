@@ -95,7 +95,7 @@ describe('When there is initially some notes saved', () => {
                 .send(newBlog)
         })
 
-        test('Delete the first blog from the list', async () => {
+        test('succeeds if id and token are valid', async () => {
             const blogsAtStart = await helper.blogsInDb()
             const deleteMe = blogsAtStart[0]
 
@@ -109,6 +109,38 @@ describe('When there is initially some notes saved', () => {
 
             const titles = blogsAtTheEnd.map(b => b.title)
             expect(titles).not.toContain(deleteMe.title)
+        })
+
+        test('Returns 401 if token is invalid', async () => {
+            token = 'invalid'
+            const blogsAtStart = await helper.blogsInDb()
+            const deleteMe = blogsAtStart[0]
+
+            await api
+                .delete(`/api/blogs/${deleteMe.id}`)
+                .set({ Authorization: `Bearer ${token}` })
+                .expect(401)
+
+            const blogsAtTheEnd = await helper.blogsInDb()
+            expect(blogsAtTheEnd).toHaveLength(blogsAtStart.length)
+
+            const titles = blogsAtTheEnd.map(b => b.title)
+            expect(titles).toContain(deleteMe.title)
+        })
+
+        test('Fails if there is no blog to delete', async () => {
+            const blogsAtStart = await helper.blogsInDb()
+
+            await api
+                .delete(`/api/blogs/123456`)
+                .set({ Authorization: `Bearer ${token}` })
+                .expect(400)
+            
+            const blogsAtTheEnd = await helper.blogsInDb()
+            expect(blogsAtTheEnd).toHaveLength(blogsAtStart.length)
+
+            const titles = blogsAtTheEnd.map(b => b.title)
+            expect(titles).toContain("React patterns")
         })
     })
 
