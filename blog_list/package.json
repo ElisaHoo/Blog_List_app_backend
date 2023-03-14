@@ -4,9 +4,10 @@
   "description": "App to save information of interesting blogs",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
-    "test": "jest --watchAll --detectOpenHandles --verbose"
+    "start": "cross-env NODE_ENV=production node index.js",
+    "dev": "cross-env NODE_ENV=developement nodemon index.js",
+    "test": "jest --verbose --runInBand",
+    "start:test": "cross-env NODE_ENV=test node index.js"
   },
   "author": "Elisa",
   "license": "MIT",
